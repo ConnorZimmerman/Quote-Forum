@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Home</title>
+</head>
+<body>
+    <a href="/py_belt/logOut">Log Out</a>
+    <h2>Welcome, {{user.alias}}</h2>
+    <br />
+    <p>Quotable Quotes</p>
+    <div id="allQuotes" style="overflow: scroll">
+        {% for quote in quotes %}
+        <div class="quoteBox">
+            <p>{{quote.author}}: {{quote.message}}</p>
+            <h6>Posted by: <a href="/py_belt/users/{{quote.userPosting.id}}">{{quote.userPosting.alias}}</a></h6>
+            <form action="/py_belt/add_to_list/{{quote.id}}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Add to My List" />
+            </form>
+        </div>
+        <br />
+        {% endfor %}
+    </div>
+    <p>Your Favorites</p>
+    <div id="favoriteQuotes" style="overflow: scroll">
+        {% for quote in quotesFavorited %}
+        <div class="quoteBox">
+            <p>{{quote.author}}: {{quote.message}}</p>
+            <h6>Posted by: <a href="/py_belt/users/{{quote.userPosting.id}}">{{quote.userPosting.alias}}</a></h6>
+            <form action="/py_belt/remove_from_list/{{quote.id}}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Remove From My List" />
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+    <p>Contribute a Quote:</p>
+    <form action="/py_belt/add/quote/validation" method="post">
+        {% csrf_token %}
+        Quoted By: <input type="text" name="author" />
+        <br />
+        Message: <textarea name="message"></textarea>
+        <br />
+        <input type="submit" value="Submit" />
+    </form>
+    {% if messages %}
+    {% for message in messages %}
+    <p style="color: red">*{{message}}</p>
+    {% endfor %}
+    {% endif %}
+</body>
+</html>

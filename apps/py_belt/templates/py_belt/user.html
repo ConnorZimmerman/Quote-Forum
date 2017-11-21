@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>User Profile</title>
+</head>
+<body>
+    <a href="/py_belt">Home</a>
+    <br />
+    <a href="/py_belt/logOut">Log Out</a>
+    <p>Posts by {{user.alias}}</p>
+    <p>Count: {{user.count}}</p>
+    <br />
+    {% for quote in quotes %}
+    <p><span style="color: red;">{{quote.author}}:</span> {{quote.message}}</p>
+    {% endfor %}
+</body>
+</html>
